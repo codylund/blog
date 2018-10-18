@@ -3,10 +3,18 @@ name = "blog"
 version = "0.1.0"
 authors = ["c"]
 
+[lib]
+name = "blog"
+path = "src/lib.rs"
+
+[[bin]]
+name = "blog"
+path = "src/main.rs"
+
 [dependencies]
 base64 = "0.9.3"
-hyper = "0.12"
 futures = "0.1"
+hyper = "0.12"
 hyper-tls = "0.3.1"
 serde = "1.0"
 serde_derive = "1.0"
