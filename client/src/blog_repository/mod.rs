@@ -36,6 +36,7 @@ impl Connection {
     pub fn get_blog_post_metadata(&self, metadata_filename: &str) -> impl Future<Item = Vec<content::BlogPostMetadata>, Error = Error> {
         self.get_blog_post(metadata_filename)
             .map(|content| {
+                println!("Got blog post metadata: {}", content);
                 let payload: Vec<content::BlogPostMetadata> = serde_json::from_str(&content).unwrap();
                 payload
             })
@@ -49,18 +50,22 @@ impl Connection {
             .map(|content| {
                 let encoded_blog_post: content::BlogPost = serde_json::from_str(&content).unwrap();
                 
-                // Remove the trailing newline (TODO: properly detect before stripping)
+                // Remove the newlines before decoding
                 let mut encoded_content = encoded_blog_post.content;
-                encoded_content.pop();
+                encoded_content = encoded_content.replace("\n", "");
 
                 // Decode base64 content
-                let string_vec = base64::decode(&encoded_content).unwrap();
+                let string_vec = base64::decode(&encoded_content)
+                    .map_err(|err| {
+                        println!("Failed to decode base64 content: {}", err)
+                    })
+                    .unwrap();
 
                 // Send the final content on its merry way!
                 str::from_utf8(&string_vec)
                     .unwrap()
                     .to_owned()
-                    })
+                })
     }
 
     // Get the full path of the blog with the given filename

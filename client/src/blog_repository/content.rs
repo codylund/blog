@@ -7,11 +7,6 @@ pub struct BlogPost {
     pub content: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct BlogPostMetadatas {
-    pub metadata: Vec<BlogPostMetadata>,
-}
-
 /**
  * Describes a blog post from a high-level.
  */ 

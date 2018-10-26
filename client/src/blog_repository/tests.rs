@@ -1,8 +1,6 @@
-#[cfg(test)]
 use blog_repository::content;
 use serde_json;    
 
-#[allow(dead_code)]
 static KEY_TITLE: &'static str = "title";
 static KEY_DESCRIPTION: &'static str = "description";
 static KEY_FILENAME: &'static str = "filename";
