@@ -1,0 +1,261 @@
+$global-margin: 16pt;
+$global-font: Arial, Helvetica, sans-serif;
+
+html {
+    height: 100%;
+}
+
+// Fill some width of the stage (from the left)
+@mixin fill_stage($width) {
+    $margin: 36pt;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: $width;
+}
+
+// Ease all changed properties in the alloted time
+@mixin ease-all($time) {
+    -webkit-transition: all $time ease;  
+    -moz-transition: all $time ease;  
+    -o-transition: all $time ease;  
+    -ms-transition: all $time ease;  
+    transition: all $time ease;
+}
+
+// Ease whatever transition is provided
+@mixin ease($stuff) {
+    -webkit-transition: $stuff ease;  
+    -moz-transition: $stuff ease;  
+    -o-transition: $stuff ease;  
+    -ms-transition: $stuff ease;  
+    transition: $stuff ease;
+}
+
+// Do the provided animation
+@mixin animate($stuff...) {
+    -webkit-transition: $stuff;  
+    -moz-transition: $stuff;  
+    -o-transition: $stuff;  
+    -ms-transition: $stuff;  
+    transition: $stuff;
+}
+
+// Contains everything
+body {
+    margin:0;
+    padding:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #225588;
+}
+
+#hamburger {
+    $patty-width: 32pt;
+    $patty-color: #ffffff;
+    $opacity: 0.5;
+    $opacity-diff: 0.2;
+
+    position: fixed;
+    margin: $global-margin;
+    width: 0pt;
+    top: 0;
+    left: $patty-width/2;  
+
+    @include ease-all(0.2s);
+
+    // Represents each slice of the hamburger
+    div {
+        background-color: $patty-color;
+        opacity: $opacity;
+        margin: 4pt;
+        width: 100%;
+        height: 4pt;
+    }
+
+    // When we hover on the menu...
+    &:hover {
+        // Update cursor
+        cursor: pointer;
+
+        // Brighten the patties
+        div {
+            opacity: $opacity + $opacity-diff;
+        }
+    }
+
+    // Toggle to show/hide hamburger menu. Make them important
+    // so they override the default styles.
+    @at-root .hamburger-active {
+        width: $patty-width !important;
+        left: 0 !important; 
+    }
+}
+
+// Opened via the hamburger button. Content directory for the entire
+// site. Also contains contact information.
+#nav {
+    @include fill_stage(40%);
+    @include animate(visibility 0s linear 0.5s, left 0.5s ease);
+    min-width: 200pt;
+    max-width: 400pt;
+    position: fixed;
+    visibility: hidden; 
+    background-color: black;
+    overflow: scroll;
+    left: -100%;
+    box-shadow: 2pt 0pt 8pt 0pt rgba(0,0,0,0.2);
+
+    $options-vertical-margin: 36pt;
+    $options-horizontal-margin: 24pt;
+
+    // Top-level of directory (e.g. projects, blog, etc.)
+    h1 {
+        font-family: $global-font;
+        font-weight: 600;
+        font-style: italic;
+        text-align: left;
+        color: white;
+        font-size: 14pt;
+    }
+
+    // Links to actual content and categorized by top-level
+    h2 {
+        margin-left: 24pt;
+        font-weight: 100;
+        font-size: 12pt;
+    }
+
+    > div {
+        margin-top: 36pt;
+        margin-bottom: 36pt;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #pic {
+        margin-bottom: 18pt;
+        width: 140pt;
+        height: 140pt;
+        border-radius: 70pt;
+        background-image: url('prof.png');
+        background-size: cover;
+    }
+
+    // Contains contact information
+    #contact {
+        padding-bottom: 8pt;
+        margin-bottom: 24pt;
+        border-bottom: 1pt solid rgba(255,255,255, 0.3);
+        * {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    #options {
+        position: relative;
+        width: 100%;
+        margin-bottom: $options-vertical-margin;
+
+        > * {
+            margin-left: $options-horizontal-margin;
+            margin-right: $options-horizontal-margin;
+            font-family: $global-font;
+            color: white;
+            text-align: left;
+        }
+
+        h2:hover {
+            cursor: pointer;
+            color: #b0b0b0;
+        }
+    }
+
+    // Toggle to show/hide the nav bar. Make them important
+    // so they override the default styles.
+    @at-root .nav-active {
+        visibility: visible !important;
+        left: 0 !important;
+        opacity: 1.0 !important;
+        transition-delay: 0s !important;
+    }
+}
+
+#contentcontainer {
+    @include fill_stage(100%);
+    position: absolute;
+    overflow-y: scroll;
+
+    $content-vertical-margin: 90pt;
+    $content-horizontal-margin: 24pt;
+
+    #content {
+        $font-color: #e0e0e0;
+        $title-weight: 900;
+        $description-weight: 100;
+    
+        position: relative;
+        margin-top: $content-vertical-margin;
+        margin-bottom: $content-vertical-margin;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 600pt;
+    
+        div {
+            margin-left: $content-horizontal-margin;
+            margin-right: $content-horizontal-margin;
+        }
+
+        #title {
+            margin-top: 16pt;
+            margin-bottom: 16pt;
+            text-align: center;
+            color: $font-color;
+            font-family: $global-font;
+            font-weight: $title-weight;
+            font-size: 24pt;
+            font-style: italic;
+        }
+    
+        #description, #created {
+            margin-bottom: 16pt;
+            color: $font-color;
+            text-align: center;
+            font-family: $global-font;
+            font-weight: $description-weight;
+            font-size: 12pt;
+        }
+
+        #created {
+            @extend #description;
+            font-size: 10pt;
+            font-style: italic;
+        }
+
+       .separator {
+            margin: auto;
+            width: 100pt;
+            height: 1pt;
+            margin-top: 24pt;
+            margin-bottom: 24pt;
+            background: $font-color;
+            opacity: 0.5;
+        }
+
+        #finally {
+            p {
+                font-family: $global-font;
+                color: $font-color;
+            }
+            margin-bottom: 90pt;
+        }
+    }
+}
