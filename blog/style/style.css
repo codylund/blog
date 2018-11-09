@@ -1,5 +1,6 @@
 html {
   height: 100%;
+  background-color: black;
 }
 
 body {
@@ -7,12 +8,11 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background-color: #225588;
 }
 
 #hamburger {
   position: fixed;
+  z-index: 100;
   margin: 16pt;
   width: 0pt;
   top: 0;
@@ -42,6 +42,7 @@ body {
 }
 
 #nav {
+  z-index: 101;
   top: 0;
   bottom: 0;
   right: 0;
@@ -88,13 +89,15 @@ body {
   width: 140pt;
   height: 140pt;
   border-radius: 70pt;
-  background-image: url("prof.png");
+  background-image: url("../img/photos/prof.png");
   background-size: cover;
 }
 #nav #contact {
   padding-bottom: 8pt;
   margin-bottom: 24pt;
   border-bottom: 1pt solid rgba(255, 255, 255, 0.3);
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 #nav #contact * {
   text-align: center;
@@ -113,9 +116,12 @@ body {
   color: white;
   text-align: left;
 }
-#nav #options h2:hover {
+#nav #options h1:hover, #nav #options h2:hover {
   cursor: pointer;
   color: #b0b0b0;
+}
+#nav #options div {
+  overflow: hidden;
 }
 .nav-active {
   visibility: visible !important;
@@ -124,61 +130,68 @@ body {
   transition-delay: 0s !important;
 }
 
-#contentcontainer {
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  overflow-y: scroll;
-}
-#contentcontainer #content {
+#headercontainer {
+  z-index: 0;
   position: relative;
-  margin-top: 90pt;
-  margin-bottom: 90pt;
-  margin-left: auto;
-  margin-right: auto;
   width: 100%;
-  max-width: 600pt;
+  height: 100%;
+  min-height: 100%;
+  background-image: url("../img/photos/nha_trang.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }
-#contentcontainer #content div {
-  margin-left: 24pt;
-  margin-right: 24pt;
+#headercontainer #header {
+  position: fixed;
+  top: 50%;
+  right: 0%;
+  transform: translate(0, -50%);
+  height: auto;
+  padding: 32pt;
 }
-#contentcontainer #content #title {
-  margin-top: 16pt;
-  margin-bottom: 16pt;
-  text-align: center;
-  color: #e0e0e0;
+#headercontainer #header * {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+}
+#headercontainer #header #title {
+  position: relative;
+  padding-bottom: 16pt;
+  color: #444444;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 900;
   font-size: 24pt;
   font-style: italic;
 }
-#contentcontainer #content #description, #contentcontainer #content #created {
-  margin-bottom: 16pt;
-  color: #e0e0e0;
-  text-align: center;
+#headercontainer #header #description, #headercontainer #header #created {
+  padding-bottom: 16pt;
+}
+#headercontainer #header #description, #headercontainer #header #created {
+  color: #444444;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   font-size: 12pt;
 }
-#contentcontainer #content #created {
+#headercontainer #header #created {
   font-size: 10pt;
   font-style: italic;
 }
-#contentcontainer #content .separator {
-  margin: auto;
-  width: 100pt;
-  height: 1pt;
-  margin-top: 24pt;
-  margin-bottom: 24pt;
-  background: #e0e0e0;
-  opacity: 0.5;
+
+#contentcontainer {
+  z-index: 1;
+  position: relative;
+  background-color: black;
+  height: 100%;
+}
+#contentcontainer #content {
+  padding-top: 24pt;
+  padding-bottom: 24pt;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600pt;
+}
+#contentcontainer #content div {
+  margin-left: 24pt;
+  margin-right: 24pt;
 }
 #contentcontainer #content #finally {
   margin-bottom: 90pt;
@@ -186,6 +199,10 @@ body {
 #contentcontainer #content #finally p {
   font-family: Arial, Helvetica, sans-serif;
   color: #e0e0e0;
+}
+#contentcontainer #map {
+  height: 100%;
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

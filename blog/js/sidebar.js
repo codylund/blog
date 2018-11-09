@@ -1,5 +1,5 @@
 function populateTestItems() {
-    var archive = document.getElementById("blog");
+    var archive = document.getElementById("blog-options");
 
     var items = [
         {
