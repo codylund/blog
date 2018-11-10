@@ -48,7 +48,7 @@ function populateTestItems() {
     for (i in items) {
         console.log(items[i]);
         var newDiv = document.createElement("h2"); 
-        newDiv.innerText = `${items[i].title}`;
+        newDiv.innerText = items[i].title;
         archive.appendChild(newDiv);
     }
 }

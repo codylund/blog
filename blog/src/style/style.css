@@ -201,6 +201,7 @@ body {
   color: #e0e0e0;
 }
 #contentcontainer #map {
+  background-color: white;
   height: 100%;
   width: 100%;
 }

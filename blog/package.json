@@ -23,9 +23,14 @@
   },
   "homepage": "https://github.com/codylund/blog#readme",
   "dependencies": {
+    "async": "^2.6.1",
     "cssnano": "^4.1.7",
+    "fs-extra": "^7.0.1",
     "html-minifier": "^3.5.21",
+    "node-sass": "^4.10.0",
+    "paper": "^0.11.8",
+    "preprocess": "^3.1.0",
     "sass": "^1.14.3",
-    "uglify-js": "^3.4.9"
+    "uglify-es": "^3.3.9"
   }
 }

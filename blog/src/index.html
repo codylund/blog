@@ -3,17 +3,22 @@
     <head>
         <title>Cody Lund</title>
 
-        <!-- CSS style sheet -->
-        <link rel="stylesheet" type="text/css" href="style/style.css">
-
         <!-- External imports -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <!-- Scripts -->
+        <!-- Debug -->
+        <!-- @exclude -->
+        <link rel="stylesheet" type="text/css" href="style/style.css">
         <script src="js/sidebar.js"></script>
         <script src="js/style.js"></script>
         <script src="js/map/map.js"></script>
         <script src="js/map/map_style.js"></script>
+        <!-- @endexclude -->
+
+        <!-- @if NODE_ENV='prod' -->
+        <link rel="stylesheet" type="text/css" href="<!-- @echo MIN_STYLE -->">
+        <script src="<!-- @echo MIN_JS -->"></script>
+        <!-- @endif -->
     </head>
     <body onload="initStyle()">   
         
@@ -28,7 +33,25 @@
         <!-- Contains the blog content -->
         <div id="contentcontainer">
             <div id="content"></div>
-            <div id="map"></div>
+            <div id="map">
+                <canvas width="960" height="500"></canvas>
+                <script src="https://d3js.org/d3.v4.min.js"></script>
+                <script src="https://unpkg.com/topojson-client@3"></script>
+                <script>
+
+                var context = d3.select("canvas").node().getContext("2d"),
+                    path = d3.geoPath(d3.geoOrthographic(), context);
+
+                d3.json("https://unpkg.com/world-atlas@1/world/50m.json", function(error, world) {
+                if (error) throw error;
+
+                context.beginPath();
+                path(topojson.mesh(world));
+                context.stroke();
+                });
+
+                </script>
+            </div>
         </div>
 
         <!-- Button that opens the menu to pick blog -->
@@ -57,6 +80,5 @@
         </div>
 
         <script>populateTestItems();</script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDozkghn5sngW8IRoiwAUDLbgOfa2S_i14&libraries=places&callback=initMap" async defer></script>
     </body>
 </html>
