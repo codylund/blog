@@ -1,5 +1,5 @@
 $global-margin: 16pt;
-$global-font: Arial, Helvetica, sans-serif;
+$global-font: 'Raleway', sans-serif;
 
 $img-root-dir: '../img';
 $photos-root-dir: $img-root-dir + '/photos';
@@ -65,7 +65,7 @@ body {
     $opacity-diff: 0.2;
 
     position: fixed;
-    z-index: 100;
+    z-index: 101;
     margin: $global-margin;
     width: 0pt;
     top: 0;
@@ -104,16 +104,14 @@ body {
 // Opened via the hamburger button. Content directory for the entire
 // site. Also contains contact information.
 #nav {
-    z-index: 101;
-    @include fill_stage(40%);
-    @include animate(visibility 0s linear 0.5s, left 0.5s ease);
-    min-width: 200pt;
-    max-width: 400pt;
+    z-index: 100;
+    @include fill_stage(100%);
+    @include animate(visibility 0s linear 0.5s, top 0.5s ease);
     position: fixed;
     visibility: hidden; 
-    background-color: black;
+    background-color:  #aa80ff;
     overflow: scroll;
-    left: -100%;
+    top: -100%;
     box-shadow: 2pt 0pt 8pt 0pt rgba(0,0,0,0.2);
 
     $options-vertical-margin: 36pt;
@@ -131,7 +129,6 @@ body {
 
     // Links to actual content and categorized by top-level
     h2 {
-        margin-left: 24pt;
         font-weight: 100;
         font-size: 12pt;
     }
@@ -142,16 +139,7 @@ body {
         margin-left: auto;
         margin-right: auto;
     }
-
-    #pic {
-        margin-bottom: 18pt;
-        width: 140pt;
-        height: 140pt;
-        border-radius: 70pt;
-        background-image: url($photos-root-dir + '/prof.png');
-        background-size: cover;
-    }
-
+    
     // Contains contact information
     #contact {
         padding-bottom: 8pt;
@@ -169,17 +157,18 @@ body {
     #options {
         position: relative;
         width: 100%;
+        margin-top: $options-vertical-margin;
         margin-bottom: $options-vertical-margin;
 
         > * {
-            margin-left: $options-horizontal-margin;
-            margin-right: $options-horizontal-margin;
             font-family: $global-font;
             color: white;
-            text-align: left;
+            text-align: center;
         }
 
-        h1, h2 {
+        h2 {
+            padding-top: 4pt;
+            padding-bottom: 4pt;
             &:hover {
                 cursor: pointer;
                 color: #b0b0b0;
@@ -187,7 +176,9 @@ body {
         }
 
         div {
-            overflow: hidden;
+            background-color: black;
+            padding-top: 8pt;
+            padding-bottom: 8pt;
         }
     }
 
@@ -195,7 +186,7 @@ body {
     // so they override the default styles.
     @at-root .nav-active {
         visibility: visible !important;
-        left: 0 !important;
+        top: 0 !important;
         opacity: 1.0 !important;
         transition-delay: 0s !important;
     }
@@ -217,8 +208,8 @@ body {
         right: 0%;
         transform: translate(0, -50%);
         $font-color: #444444;
-        $title-weight: 900;
-        $description-weight: 100;
+        $title-weight: 500;
+        $description-weight: 400;
         height: auto;
         padding: 32pt;
         
@@ -235,7 +226,6 @@ body {
             font-family: $global-font;
             font-weight: $title-weight;
             font-size: 24pt;
-            font-style: italic;
         }
     
         #description { 
@@ -252,7 +242,6 @@ body {
         #created {
             @extend #description;
             font-size: 10pt;
-            font-style: italic;
         }
     }
 }

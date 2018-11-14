@@ -243,7 +243,9 @@ function compileSASS(inputFile, outputFile) {
         outFile: outputFile
     }, (err, result) => {
         if (!err) {
-            fs.writeFileSync(outputFile, result.css);
+            // TODO properly detect and update these paths
+            var str = result.css.toString().replace(/\.\.\//g, './');
+            fs.writeFileSync(outputFile, Buffer.from(str));
         }
     });
 }

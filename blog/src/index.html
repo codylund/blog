@@ -5,14 +5,13 @@
 
         <!-- External imports -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500" rel="stylesheet">
 
         <!-- Debug -->
         <!-- @exclude -->
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <script src="js/sidebar.js"></script>
         <script src="js/style.js"></script>
-        <script src="js/map/map.js"></script>
-        <script src="js/map/map_style.js"></script>
         <!-- @endexclude -->
 
         <!-- @if NODE_ENV='prod' -->
@@ -21,53 +20,21 @@
         <!-- @endif -->
     </head>
     <body onload="initStyle()">   
-        
-        <div id="headercontainer">
-            <div id="header">
-                <div id="title">Some Obnoxious Title About Technology</div>
-                <div id="description">Some descriptive text about the article.</div>
-                <div id="created">November 2, 2018</div>
-            </div>
-        </div>
 
         <!-- Contains the blog content -->
         <div id="contentcontainer">
-            <div id="content"></div>
-            <div id="map">
-                <canvas width="960" height="500"></canvas>
-                <script src="https://d3js.org/d3.v4.min.js"></script>
-                <script src="https://unpkg.com/topojson-client@3"></script>
-                <script>
-
-                var context = d3.select("canvas").node().getContext("2d"),
-                    path = d3.geoPath(d3.geoOrthographic(), context);
-
-                d3.json("https://unpkg.com/world-atlas@1/world/50m.json", function(error, world) {
-                if (error) throw error;
-
-                context.beginPath();
-                path(topojson.mesh(world));
-                context.stroke();
-                });
-
-                </script>
+            <div id="headercontainer">
+                <div id="header">
+                    <div id="title">Some Obnoxious Title About Technology</div>
+                    <div id="description">Some descriptive text about the article.</div>
+                    <div id="created">November 2, 2018</div>
+                </div>
             </div>
-        </div>
-
-        <!-- Button that opens the menu to pick blog -->
-        <div class="ease hamburger-active" id="hamburger" >
-            <div></div>
-            <div></div>
-            <div></div>
+            <div id="content"></div>
         </div>
 
         <!-- Navigation -->
         <div id="nav">
-            <div id="pic"></div>
-            <div id="contact">
-                <h1>Cody Lund</h1>
-                <h2>codylund14@gmail.com</h2>
-            </div>
             <div id="options">
                 <h1 id="project-options-header">PROJECTS</h1>
                 <div id="project-options">
@@ -77,6 +44,13 @@
                 <h1 id="blog-options-header">BLOG</h1>
                 <div id="blog-options"></div>
             </div>
+        </div>
+
+        <!-- Button that opens the menu to pick blog -->
+        <div class="ease hamburger-active" id="hamburger" >
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
 
         <script>populateTestItems();</script>
