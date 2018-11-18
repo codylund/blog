@@ -1,0 +1,46 @@
+
+task wasm(type: Exec, description: "Builds WASM files from the Rust project.") {
+    
+    workingDir "$projectDir/$wasmDir"
+
+    inputs.file("$wasmDir/Cargo.toml")
+    inputs.dir("$wasmDir/src")
+    
+    outputs.dir("$wasmDir/target")
+
+    def wasmTarget = "wasm32-unknown-unknown"
+    def wasmFile = "fetch_github.wasm"
+
+    // TODO support multi-profile builds (e.g. production)
+    commandLine "cargo", "+nightly", "build", "--target", wasmTarget
+
+    // Output file path for 
+    wasm.ext.wasmFile = "$workingDir/target/$wasmTarget/debug/$wasmFile"
+
+}
+
+
+task bindgen(type: Exec, description: "") {
+
+    dependsOn wasm
+
+    def inputWasmFile = wasm.ext.wasmFile
+    def outputDir = "$buildDir/$wasmDir"
+
+    inputs.file(inputWasmFile)
+    outputs.dir(outputDir)
+
+    commandLine "wasm-bindgen", inputWasmFile, "--out-dir", outputDir
+
+}
+
+task webpack(type: Exec) {
+    
+    workingDir "$projectDir/$webpackDir"
+
+    dependsOn bindgen
+
+    commandLine "npm install"
+    commandLine "$workingDir/node_modules/.bin/webpack", "$workingDir/index.js", "-o", "/Users/c/blog/site/src/js/fetch-github.bundle.js"
+
+}

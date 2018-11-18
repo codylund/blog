@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "webpack-dev-server -d",
+    "build": "webpack"
+  },
+  "bin": {
+    "fetch-github": ".dist/fetch-github.bundle.js"
+  },
+  "devDependencies": {
+    "@wasm-tool/wasm-pack-plugin": "0.1.4",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.0.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.0"
+  }
+}
