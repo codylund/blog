@@ -1,3 +1,4 @@
 client/target
 client/**/*.rs.bk
 *.DS_Store
+.vscode/*
