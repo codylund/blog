@@ -184,7 +184,7 @@ body {
 
         div {
             overflow: scroll;
-            max-height: 240pt;
+            height: 240pt;
             text-align: left;
             overflow-x: scroll;
             overflow-y: hidden;
@@ -221,10 +221,16 @@ body {
                     }
                 }
 
-                h1 {
+                h1  {
                     color: black;
                     font-style: normal;
-                    font-size: 12pt;
+                    font-size: 10pt;
+                }
+
+                h2 {
+                    color: black;
+
+                    font-size: 10pt;
                 }
 
                 p {

@@ -119,7 +119,7 @@ body {
 }
 #nav #options div {
   overflow: scroll;
-  max-height: 240pt;
+  height: 240pt;
   text-align: left;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -157,7 +157,11 @@ body {
 #nav #options div div h1 {
   color: black;
   font-style: normal;
-  font-size: 12pt;
+  font-size: 10pt;
+}
+#nav #options div div h2 {
+  color: black;
+  font-size: 10pt;
 }
 #nav #options div div p {
   color: black;

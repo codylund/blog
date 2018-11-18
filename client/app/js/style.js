@@ -56,12 +56,14 @@ class NavOptionToggler {
     }
 
     show() {
+        console.log("showing ", this.element);
         this.element
             .delay(200)
             .animate({ height: this.height, top: 0 }, 200)
     }
     
     hide() {
+        console.log("hidiing ", this.element);
         this.scrollOffset = 0;
         this.element
             .scrollLeft(0)
