@@ -9,5 +9,8 @@ extern crate serde_derive;
 // Contains all the GitHub access stuff
 mod github;
 
+// Options menu UI handling
+mod ui;
+
 // Contains functions bindable by JS
 pub mod bindings;

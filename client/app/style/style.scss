@@ -50,6 +50,13 @@ html {
     transition: $stuff;
 }
 
+@mixin disable-hightlight() {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none; 
+}
+
 // Contains everything
 body {
     margin:0;
@@ -58,6 +65,9 @@ body {
     height: 100%;
 }
 
+$patty-margin: 4pt;
+$patty-height: 4pt;
+$hamburger-height: 3*($patty-height) + (4*$patty-margin);
 #hamburger {
     $patty-width: 32pt;
     $patty-color: #ffffff;
@@ -77,9 +87,9 @@ body {
     div {
         background-color: $patty-color;
         opacity: $opacity;
-        margin: 4pt;
+        margin: $patty-margin;
         width: 100%;
-        height: 4pt;
+        height: $patty-height;
     }
 
     // When we hover on the menu...
@@ -103,112 +113,122 @@ body {
 
 // Opened via the hamburger button. Content directory for the entire
 // site. Also contains contact information.
-#nav {
-    z-index: 100;
+#topics {
     @include fill_stage(100%);
-    @include animate(visibility 0s linear 0.5s, top 0.5s ease);
-    position: fixed;
-    visibility: hidden; 
+
+    // A funky ass background
     background-image: linear-gradient(#66ccff, #cc99ff);
     overflow: scroll;
-    top: -100%;
-    box-shadow: 2pt 0pt 8pt 0pt rgba(0,0,0,0.2);
-
-    $options-vertical-margin: 36pt;
-    $options-horizontal-margin: 24pt;
-
-    // Top-level of directory (e.g. projects, blog, etc.)
-    h1 {
-        font-family: $global-font;
-        font-weight: 600;
-        font-style: italic;
-        text-align: left;
-        color: white;
-        font-size: 14pt;
-    }
-
-    // Links to actual content and categorized by top-level
-    h2 {
-        font-weight: 100;
-        font-size: 12pt;
-    }
-
-    > div {
-        margin-top: 36pt;
-        margin-bottom: 36pt;
-        margin-left: auto;
-        margin-right: auto;
-    }
     
-    // Contains contact information
-    #contact {
-        padding-bottom: 8pt;
-        margin-bottom: 24pt;
-        border-bottom: 1pt solid rgba(255,255,255, 0.3);
-        font-family: $global-font;
-        color: white;
-        * {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
+    font-family: $global-font;
 
-    #options {
-        position: relative;
+    // Display topics as a flexbox
+    display: flex;
+    flex-direction: column;  // organize flex items vertically
+    flex-wrap: nowrap;
+    justify-content: center; // center flex items vertically
+
+    // We want the headers to match the hamburger menu in height
+    $header-height: $hamburger-height + 2*$global-margin;
+
+    // Each topic (includes header and content container)
+    > div {
         width: 100%;
-        margin-top: $options-vertical-margin;
-        margin-bottom: $options-vertical-margin;
+        overflow: hidden;
 
-        > * {
-            font-family: $global-font;
-            text-align: center;
+        display: flex;          // each topic is also a flexbox
+        flex-direction: column; // organize flex items vertically
+
+        // Peeks the topic (i.e. shows the header, but hides the content)
+        &.peek {
+            height: 2*$global-margin + $header-height;
+            opacity: 1;
+
+            > .content {
+                height: 0vh;
+            }
+
         }
 
-        h1 {
-            color: #f0f0f0;
-        }
+        // Shows the topic (i.e. shows the header and the content)
+        &.show {
+            height: 100vh;
+            opacity: 1;
 
-        h2 {
-            text-align: center;
-            vertical-align: middle;
-            margin-top: 16pt;
-            margin-bottom: 16pt;
-            color:  #e6e6ff;
-
-            &:hover {
-                cursor: pointer;
-                color: #000000;
+            > .content {
+                height: 100vh;
             }
         }
 
-        div {
-            overflow: scroll;
-            height: 240pt;
-            text-align: left;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            white-space: nowrap;
-            font-size: 0;
-            background-color: orange;
-            box-shadow:         inset 0pt 5pt 4pt -4pt #303030,
-            inset 0pt -4pt 4pt -4pt #303030;
+        // Hides the topic (i.e. hides the header and the content)
+        &.hide {
+            height: 0vh;
+            opacity: 0;
+        }
 
+        // Add animations so the peek, hide, show actions look pretty
+        @include animate(height 0.2s ease);
+
+        > * {
+            margin: auto;
+            width: 100%;
+        }
+
+        // Options header (e.g. Projects, Blog)
+        > h1 {
+            // Text styling
+            font-size: 16pt;
+            font-weight: 400;
+            text-align: center;
+            color: #ffffff;
+
+            // Don't let this flex box shrink this on its own
+            flex-shrink: 0;
+            overflow: hidden;
+
+            // Controls height of this element. It will always be visible
+            // if the containing topic is visible, so set and forget this
+            // height.
+            line-height: $hamburger-height + 2*$global-margin;
+
+            cursor: pointer;  // Make the header look clickable on hover
+        }
+
+        // Options container
+        > div {
+            // This is where all the topic content resides, so make it 
+            // scrollable incase there is a lot to show.
+            overflow: scroll;      
+            height: 0;
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+            // More beautification
+            background-color: orange;      
+            @include animate(height 0.2s ease);
+
+            // Items in container
             div {
-                display: inline-block;
+                flex-shrink: 1;
+                flex-grow: 1;
+                flex-basis: auto;
+                justify-content: center;
+
+                margin: 8pt;
+                max-width: 92vw;
+                width: 220pt;
+
+                height: auto;
+                border: 1pt dashed white;
                 border-radius: 4pt;
-                margin-top: 16pt;
-                margin-bottom: 16pt;
-                margin-left: 4pt;
-                margin-right: 4pt;
-                height: 208pt;
-                width: 160pt;
                 background-color: white;
-                box-shadow: #a0a0a0 0pt 1pt 1pt;
                 white-space: normal;
-                vertical-align: text-bottom;
 
                 > * {
+                    @include disable-hightlight();
                     padding: 0;
                     margin-left: 16pt;
                     margin-right: 16pt;
@@ -221,33 +241,40 @@ body {
                     }
                 }
 
+                // Item title
                 h1  {
-                    color: black;
+                    color: #cc99ff;
                     font-style: normal;
-                    font-size: 10pt;
+                    font-size: 12pt;
+
+                    a {
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
                 }
 
                 h2 {
                     color: black;
-
                     font-size: 10pt;
+                }
+
+                h3 {
+                    color: #66ccff;
+                    font-size: 10pt;
+                    font-weight: 200pt;
                 }
 
                 p {
                     color: black;
                     font-size: 10pt;
                 }
-
-                &:first-child {
-                    margin-left: 8pt;
-                }
-
-                &:last-child {
-                    margin-right: 8pt;
-                }
             }
         }
     }
+    
 
     // Toggle to show/hide the nav bar. Make them important
     // so they override the default styles.
@@ -257,101 +284,4 @@ body {
         opacity: 1.0 !important;
         transition-delay: 0s !important;
     }
-}
-
-#headercontainer {
-    z-index: 0;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    background-image: url($photos-root-dir + '/nha_trang.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-
-    #header {
-        position: fixed;
-        top: 50%;
-        right: 0%;
-        transform: translate(0, -50%);
-        $font-color: #444444;
-        $title-weight: 500;
-        $description-weight: 400;
-        height: auto;
-        padding: 32pt;
-        
-        * {
-            display: inline-block;
-            width: 100%;
-            text-align: right;
-        }
-
-        #title {
-            position: relative;
-            padding-bottom: 16pt;
-            color: $font-color;
-            font-family: $global-font;
-            font-weight: $title-weight;
-            font-size: 24pt;
-        }
-    
-        #description { 
-            padding-bottom: 16pt;
-        }
-
-        #description, #created {            
-            color: $font-color;
-            font-family: $global-font;
-            font-weight: $description-weight;
-            font-size: 12pt;
-        }
-
-        #created {
-            @extend #description;
-            font-size: 10pt;
-        }
-    }
-}
-
-#contentcontainer {
-    z-index: 1;
-    position: relative;
-    background-color: black;
-    height: 100%;
-
-    $content-vertical-padding: 24pt;
-    $content-horizontal-padding: 24pt;
-
-    #content {
-        $font-color: #e0e0e0;
-        padding-top: $content-vertical-padding;
-        padding-bottom: $content-vertical-padding;
-        margin-left: auto;
-        margin-right: auto;        
-        max-width: 600pt;
-    
-        div {
-            margin-left: $content-horizontal-padding;
-            margin-right: $content-horizontal-padding;
-        }
-
-        #finally {
-            p {
-                font-family: $global-font;
-                color: $font-color;
-            }
-            margin-bottom: 90pt;
-        }
-    }
-
-    #map {
-        background-color: white;
-        height: 100%;
-        width:100%;
-    }
-}
-
-.ui-draggable-handle{
-    -ms-touch-action:none;
-    touch-action:none
 }

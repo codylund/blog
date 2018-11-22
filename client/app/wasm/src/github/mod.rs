@@ -2,12 +2,10 @@ use futures::{future, Future};
 use js_sys::Promise;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use wasm_bindgen_futures::future_to_promise;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{Request, RequestInit, RequestMode, Response};
+use web_sys::Response;
 
-
-mod content;
+pub mod content;
 mod fetch;
 
 const GITHUB_BASE: &'static str = "https://api.github.com";
@@ -15,7 +13,8 @@ const REPOS_PATH: &'static str = "users/codylund/repos";
 const BLOG_PATH: &'static str = "blog";
 const METADATA_FILE: &'static str = "metadata.blog";
 
-pub fn get_repos() -> impl Future<Item = JsValue, Error = JsValue> {
+// Get information about all the repositories on my Github account
+pub fn get_repos() -> impl Future<Item = Vec<content::Repo>, Error = JsValue> {
     // Make a promise for the repos API call
     let request_promise = fetch::get(&format!("{}/{}", GITHUB_BASE, REPOS_PATH));
 
@@ -24,15 +23,12 @@ pub fn get_repos() -> impl Future<Item = JsValue, Error = JsValue> {
     json_response.and_then(|json| {
         // Parse the reponse into Repo objects
         let repos: Vec<content::Repo> = json.into_serde().unwrap();
-        // Everything went alright!
-        future::ok(JsValue::from_serde(&repos).unwrap())
+        future::ok(repos)
     })
 }
 
 // Waits for a JSON response for the given promise
-fn get_future_json_response(request: Promise) -> 
-    impl Future<Item = JsValue, Error = JsValue> 
-{
+fn get_future_json_response(request: Promise) -> impl Future<Item = JsValue, Error = JsValue> {
     JsFuture::from(request)
         .and_then(|resp_value| {
             // `resp_value` is a `Response` object.

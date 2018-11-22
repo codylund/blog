@@ -41,8 +41,7 @@ body {
   left: 0 !important;
 }
 
-#nav {
-  z-index: 100;
+#topics {
   top: 0;
   bottom: 0;
   right: 0;
@@ -51,212 +50,133 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  -webkit-transition: visibility 0s linear 0.5s, top 0.5s ease;
-  -moz-transition: visibility 0s linear 0.5s, top 0.5s ease;
-  -o-transition: visibility 0s linear 0.5s, top 0.5s ease;
-  -ms-transition: visibility 0s linear 0.5s, top 0.5s ease;
-  transition: visibility 0s linear 0.5s, top 0.5s ease;
-  position: fixed;
-  visibility: hidden;
   background-image: linear-gradient(#66ccff, #cc99ff);
   overflow: scroll;
-  top: -100%;
-  box-shadow: 2pt 0pt 8pt 0pt rgba(0, 0, 0, 0.2);
-}
-#nav h1 {
   font-family: "Raleway", sans-serif;
-  font-weight: 600;
-  font-style: italic;
-  text-align: left;
-  color: white;
-  font-size: 14pt;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
-#nav h2 {
-  font-weight: 100;
-  font-size: 12pt;
-}
-#nav > div {
-  margin-top: 36pt;
-  margin-bottom: 36pt;
-  margin-left: auto;
-  margin-right: auto;
-}
-#nav #contact {
-  padding-bottom: 8pt;
-  margin-bottom: 24pt;
-  border-bottom: 1pt solid rgba(255, 255, 255, 0.3);
-  font-family: "Raleway", sans-serif;
-  color: white;
-}
-#nav #contact * {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-#nav #options {
-  position: relative;
+#topics > div {
   width: 100%;
-  margin-top: 36pt;
-  margin-bottom: 36pt;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-transition: height 0.2s ease;
+  -moz-transition: height 0.2s ease;
+  -o-transition: height 0.2s ease;
+  -ms-transition: height 0.2s ease;
+  transition: height 0.2s ease;
 }
-#nav #options > * {
-  font-family: "Raleway", sans-serif;
+#topics > div.peek {
+  height: 92pt;
+  opacity: 1;
+}
+#topics > div.peek > .content {
+  height: 0vh;
+}
+#topics > div.show {
+  height: 100vh;
+  opacity: 1;
+}
+#topics > div.show > .content {
+  height: 100vh;
+}
+#topics > div.hide {
+  height: 0vh;
+  opacity: 0;
+}
+#topics > div > * {
+  margin: auto;
+  width: 100%;
+}
+#topics > div > h1 {
+  font-size: 16pt;
+  font-weight: 400;
   text-align: center;
-}
-#nav #options h1 {
-  color: #f0f0f0;
-}
-#nav #options h2 {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 16pt;
-  margin-bottom: 16pt;
-  color: #e6e6ff;
-}
-#nav #options h2:hover {
+  color: #ffffff;
+  flex-shrink: 0;
+  overflow: hidden;
+  line-height: 60pt;
   cursor: pointer;
-  color: #000000;
 }
-#nav #options div {
+#topics > div > div {
   overflow: scroll;
-  height: 240pt;
-  text-align: left;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  font-size: 0;
+  height: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   background-color: orange;
-  box-shadow: inset 0pt 5pt 4pt -4pt #303030, inset 0pt -4pt 4pt -4pt #303030;
+  -webkit-transition: height 0.2s ease;
+  -moz-transition: height 0.2s ease;
+  -o-transition: height 0.2s ease;
+  -ms-transition: height 0.2s ease;
+  transition: height 0.2s ease;
 }
-#nav #options div div {
-  display: inline-block;
+#topics > div > div div {
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: auto;
+  justify-content: center;
+  margin: 8pt;
+  max-width: 92vw;
+  width: 220pt;
+  height: auto;
+  border: 1pt dashed white;
   border-radius: 4pt;
-  margin-top: 16pt;
-  margin-bottom: 16pt;
-  margin-left: 4pt;
-  margin-right: 4pt;
-  height: 208pt;
-  width: 160pt;
   background-color: white;
-  box-shadow: #a0a0a0 0pt 1pt 1pt;
   white-space: normal;
-  vertical-align: text-bottom;
 }
-#nav #options div div > * {
+#topics > div > div div > * {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
   padding: 0;
   margin-left: 16pt;
   margin-right: 16pt;
   margin-bottom: 8pt;
 }
-#nav #options div div > *:first-child {
+#topics > div > div div > *:first-child {
   margin-top: 16pt;
 }
-#nav #options div div > *:last-child {
+#topics > div > div div > *:last-child {
   margin-bottom: 16pt;
 }
-#nav #options div div h1 {
-  color: black;
+#topics > div > div div h1 {
+  color: #cc99ff;
   font-style: normal;
-  font-size: 10pt;
+  font-size: 12pt;
 }
-#nav #options div div h2 {
+#topics > div > div div h1 a {
+  text-decoration: none;
+}
+#topics > div > div div h1 a:hover {
+  text-decoration: underline;
+}
+#topics > div > div div h2 {
   color: black;
   font-size: 10pt;
 }
-#nav #options div div p {
+#topics > div > div div h3 {
+  color: #66ccff;
+  font-size: 10pt;
+  font-weight: 200pt;
+}
+#topics > div > div div p {
   color: black;
   font-size: 10pt;
-}
-#nav #options div div:first-child {
-  margin-left: 8pt;
-}
-#nav #options div div:last-child {
-  margin-right: 8pt;
 }
 .nav-active {
   visibility: visible !important;
   top: 0 !important;
   opacity: 1 !important;
   transition-delay: 0s !important;
-}
-
-#headercontainer {
-  z-index: 0;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  background-image: url("../img/photos/nha_trang.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-}
-#headercontainer #header {
-  position: fixed;
-  top: 50%;
-  right: 0%;
-  transform: translate(0, -50%);
-  height: auto;
-  padding: 32pt;
-}
-#headercontainer #header * {
-  display: inline-block;
-  width: 100%;
-  text-align: right;
-}
-#headercontainer #header #title {
-  position: relative;
-  padding-bottom: 16pt;
-  color: #444444;
-  font-family: "Raleway", sans-serif;
-  font-weight: 500;
-  font-size: 24pt;
-}
-#headercontainer #header #description, #headercontainer #header #created {
-  padding-bottom: 16pt;
-}
-#headercontainer #header #description, #headercontainer #header #created {
-  color: #444444;
-  font-family: "Raleway", sans-serif;
-  font-weight: 400;
-  font-size: 12pt;
-}
-#headercontainer #header #created {
-  font-size: 10pt;
-}
-
-#contentcontainer {
-  z-index: 1;
-  position: relative;
-  background-color: black;
-  height: 100%;
-}
-#contentcontainer #content {
-  padding-top: 24pt;
-  padding-bottom: 24pt;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 600pt;
-}
-#contentcontainer #content div {
-  margin-left: 24pt;
-  margin-right: 24pt;
-}
-#contentcontainer #content #finally {
-  margin-bottom: 90pt;
-}
-#contentcontainer #content #finally p {
-  font-family: "Raleway", sans-serif;
-  color: #e0e0e0;
-}
-#contentcontainer #map {
-  background-color: white;
-  height: 100%;
-  width: 100%;
-}
-
-.ui-draggable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
 }
 
 /*# sourceMappingURL=style.css.map */

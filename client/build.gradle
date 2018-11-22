@@ -16,7 +16,6 @@ task wasm(type: Exec, description: "Builds WASM files from the Rust project.") {
 
     // Output file path for 
     wasm.ext.wasmFile = "$workingDir/target/$wasmTarget/debug/$wasmFile"
-
 }
 
 
