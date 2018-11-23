@@ -19,7 +19,7 @@ module.exports = {
         }),
     
         new WasmPackPlugin({
-          crateDirectory: path.resolve(__dirname, "app/wasm/fetch-github-wasm")
+          crateDirectory: path.resolve(__dirname, "app/wasm")
         }),
     ]
 };

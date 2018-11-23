@@ -19,7 +19,7 @@ impl TopicController {
         TopicController { topics: Rc::new(RefCell::new(Vec::new())) }
     }
 
-    pub fn add_topic(&mut self, element: HtmlElement) {
+    pub fn add_topic(&mut self, element: HtmlElement, header: HtmlElement) {
         // Get a mutable reference to the topics list
         let mut topics = self.topics.borrow_mut();
 
@@ -50,7 +50,7 @@ impl TopicController {
                 }
             }
         }) as Box<FnMut()>);
-        element.set_onclick(Some(interact.as_ref().unchecked_ref()));
+        header.set_onclick(Some(interact.as_ref().unchecked_ref()));
         interact.forget();
 
         // Create the new topic and set click listener for the topic

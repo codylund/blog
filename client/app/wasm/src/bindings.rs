@@ -16,23 +16,17 @@ pub fn init_nav() -> Result<(), JsValue> {
     let document = get_document();
 
     // Get the nav elements we need from the document.
-    let project = document
-        .get_element_by_id("project")
-        .expect("missing element with id 'project") 
-        .dyn_into::<HtmlElement>()
-        .expect("missing HtmlElement with id 'project");
-    let blog = document
-        .get_element_by_id("blog")
-        .expect("missing elment with id 'blog'")
-        .dyn_into::<HtmlElement>()
-        .expect("missing HtmlElment with id 'blog'");
+    let project = get_html_element(&document, "project");
+    let project_header = get_html_element(&document, "project-options-header");
+    let blog = get_html_element(&document, "blog");
+    let blog_header = get_html_element(&document, "blog-options-header");
 
     // Get a new topic contoler
     let mut topic_controller = ui::nav::TopicController::new();
 
     // Add the HTML element 'topics' to our topic controller
-    topic_controller.add_topic(project);
-    topic_controller.add_topic(blog);
+    topic_controller.add_topic(project, project_header);
+    topic_controller.add_topic(blog, blog_header);
 
     Ok(())
 }
@@ -61,9 +55,9 @@ pub fn load_repos() -> Promise {
         });
 
         // We have to return something but we've already done everything
-        // we need to do, so just returned undefined. At the very least
+        // we need to do, so just return true. At the very least
         // we can infer a panic did not occur.
-        JsValue::undefined()
+        JsValue::from_bool(true)
     });
 
     // Convert the Future to a Promise the JS code can understand.
@@ -74,4 +68,12 @@ pub fn load_repos() -> Promise {
 fn get_document() -> Document {
     let window = web_sys::window().expect(ERR_MSG_EXPECTED_WINDOW);
     window.document().expect(ERR_MSG_EXPECTED_DOCUMENT)
+}
+
+fn get_html_element(document: &Document, id: &str) -> HtmlElement {
+    document
+        .get_element_by_id(id)
+        .expect(&format!("missing element with id '{}'", id)) 
+        .dyn_into::<HtmlElement>()
+        .expect(&format!("missing HtmlElement with id '{}'", id))
 }
